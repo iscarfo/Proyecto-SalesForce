@@ -1,0 +1,315 @@
+<template>
+    <lightning-card title="Accounts by Level" icon-name="standard:account">
+        <div class="slds-p-around_medium host-container">
+            <lightning-button
+                label="Update Account Level"
+                variant="brand"
+                onclick={handleUpdateLevels}
+                disabled={isLoading}
+                class="slds-m-bottom_medium"
+            ></lightning-button>
+
+            <div class="slds-grid slds-m-bottom_large slds-m-top_medium">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-combobox
+                        name="ownerFilter"
+                        label="Filter by Owner"
+                        value={ownerIdFilter}
+                        placeholder="Select an Owner"
+                        options={userOptions}
+                        onchange={handleOwnerFilterChange}
+                    ></lightning-combobox>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-wrap slds-gutters full-width-grid">
+                <div class="slds-col slds-size_1-of-3 slds-p-horizontal_small col-vertical">
+                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">
+                        Level 1 ({totalRecordsLevel1} Records)
+                    </h3>
+
+                    <div class="slds-grid slds-gutters slds-m-bottom_small">
+                        <div class="slds-col">
+                            <lightning-input
+                                type="search"
+                                label="Filter by Name"
+                                data-level="1"
+                                onchange={handleFilterChange}
+                            ></lightning-input>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-input
+                                type="search"
+                                label="Filter by Phone"
+                                data-level="1"
+                                onchange={handleFilterChange}
+                            ></lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <lightning-datatable
+                            data-id="lvl1Table"
+                            key-field="Id"
+                            data={level1Data}
+                            columns={columns}
+                            column-widths-mode="fixed"
+                            onrowselection={handleRowSelectionLevel1}
+                            selected-rows={selectedLevel1Ids}
+                            onsort={handleSort}
+                            sorted-by={sortByLevel1}
+                            sorted-direction={sortDirectionLevel1}
+                        ></lightning-datatable>
+                    </div>
+
+                    <div class="slds-grid slds-grid_vertical slds-m-top_small pagination-container">
+                        <div class="slds-grid slds-grid_align-center slds-m-bottom_x-small">
+                            <span class="slds-p-top_xx-small">
+                                Página {currentPageLevel1} de {totalPagesLevel1}
+                            </span>
+                        </div>
+                        <div class="slds-grid slds-grid_align-center">
+                            <lightning-button-group>
+                                <lightning-button
+                                    label="First"
+                                    icon-name="utility:jump_to_left"
+                                    onclick={handleFirstPage}
+                                    data-level="1"
+                                    disabled={isFirstPageLevel1}
+                                ></lightning-button>
+                                <lightning-button
+                                    label="Previous"
+                                    icon-name="utility:chevronleft"
+                                    onclick={handlePrevPage}
+                                    data-level="1"
+                                    disabled={isFirstPageLevel1}
+                                ></lightning-button>
+                                <lightning-button
+                                    label="Next"
+                                    icon-name="utility:chevronright"
+                                    icon-position="right"
+                                    onclick={handleNextPage}
+                                    data-level="1"
+                                    disabled={isLastPageLevel1}
+                                ></lightning-button>
+                                <lightning-button
+                                    label="Last"
+                                    icon-name="utility:jump_to_right"
+                                    icon-position="right"
+                                    onclick={handleLastPage}
+                                    data-level="1"
+                                    disabled={isLastPageLevel1}
+                                ></lightning-button>
+                            </lightning-button-group>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3 slds-p-horizontal_small col-vertical">
+                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">
+                        Level 2 ({totalRecordsLevel2} Records)
+                    </h3>
+
+                    <div class="slds-grid slds-gutters slds-m-bottom_small">
+                        <div class="slds-col">
+                            <lightning-input
+                                type="search"
+                                label="Filter by Name"
+                                data-level="2"
+                                onchange={handleFilterChange}
+                            ></lightning-input>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-input
+                                type="search"
+                                label="Filter by Phone"
+                                data-level="2"
+                                onchange={handleFilterChange}
+                            ></lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <lightning-datatable
+                            data-id="lvl2Table"
+                            key-field="Id"
+                            data={level2Data}
+                            columns={columns}
+                            column-widths-mode="fixed"
+                            onrowselection={handleRowSelectionLevel2}
+                            selected-rows={selectedLevel2Ids}
+                            onsort={handleSort}
+                            sorted-by={sortByLevel2}
+                            sorted-direction={sortDirectionLevel2}
+                        ></lightning-datatable>
+                    </div>
+
+                    <div class="slds-grid slds-grid_vertical slds-m-top_small pagination-container">
+                        <div class="slds-grid slds-grid_align-center slds-m-bottom_x-small">
+                            <span class="slds-p-top_xx-small">
+                                Página {currentPageLevel2} de {totalPagesLevel2}
+                            </span>
+                        </div>
+                        <div class="slds-grid slds-grid_align-center">
+                            <lightning-button-group>
+                                <lightning-button
+                                    label="First"
+                                    icon-name="utility:jump_to_left"
+                                    onclick={handleFirstPage}
+                                    data-level="2"
+                                    disabled={isFirstPageLevel2}
+                                ></lightning-button>
+                                <lightning-button
+                                    label="Previous"
+                                    icon-name="utility:chevronleft"
+                                    onclick={handlePrevPage}
+                                    data-level="2"
+                                    disabled={isFirstPageLevel2}
+                                ></lightning-button>
+                                <lightning-button
+                                    label="Next"
+                                    icon-name="utility:chevronright"
+                                    icon-position="right"
+                                    onclick={handleNextPage}
+                                    data-level="2"
+                                    disabled={isLastPageLevel2}
+                                ></lightning-button>
+                                <lightning-button
+                                    label="Last"
+                                    icon-name="utility:jump_to_right"
+                                    icon-position="right"
+                                    onclick={handleLastPage}
+                                    data-level="2"
+                                    disabled={isLastPageLevel2}
+                                ></lightning-button>
+                            </lightning-button-group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_small col-vertical">
+                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">
+                        Level 3 ({totalRecordsLevel3} Records)
+                    </h3>
+
+                    <div class="slds-grid slds-gutters slds-m-bottom_small">
+                        <div class="slds-col">
+                            <lightning-input
+                                type="search"
+                                label="Filter by Name"
+                                data-level="3"
+                                onchange={handleFilterChange}
+                            ></lightning-input>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-input
+                                type="search"
+                                label="Filter by Phone"
+                                data-level="3"
+                                onchange={handleFilterChange}
+                            ></lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <lightning-datatable
+                            data-id="lvl3Table"
+                            key-field="Id"
+                            data={level3Data}
+                            columns={columns}
+                            column-widths-mode="fixed"
+                            onrowselection={handleRowSelectionLevel3}
+                            selected-rows={selectedLevel3Ids}
+                            onsort={handleSort}
+                            sorted-by={sortByLevel3}
+                            sorted-direction={sortDirectionLevel3}
+                        ></lightning-datatable>
+                    </div>
+
+                    <div class="slds-grid slds-grid_vertical slds-m-top_small pagination-container">
+                        <div class="slds-grid slds-grid_align-center slds-m-bottom_x-small">
+                            <span class="slds-p-top_xx-small">
+                                Página {currentPageLevel3} de {totalPagesLevel3}
+                            </span>
+                        </div>
+                        <div class="slds-grid slds-grid_align-center">
+                            <lightning-button-group>
+                                <lightning-button
+                                    label="First"
+                                    icon-name="utility:jump_to_left"
+                                    onclick={handleFirstPage}
+                                    data-level="3"
+                                    disabled={isFirstPageLevel3}
+                                ></lightning-button>
+                                <lightning-button
+                                    label="Previous"
+                                    icon-name="utility:chevronleft"
+                                    onclick={handlePrevPage}
+                                    data-level="3"
+                                    disabled={isFirstPageLevel3}
+                                ></lightning-button>
+                                <lightning-button
+                                    label="Next"
+                                    icon-name="utility:chevronright"
+                                    icon-position="right"
+                                    onclick={handleNextPage}
+                                    data-level="3"
+                                    disabled={isLastPageLevel3}
+                                ></lightning-button>
+                                <lightning-button
+                                    label="Last"
+                                    icon-name="utility:jump_to_right"
+                                    icon-position="right"
+                                    onclick={handleLastPage}
+                                    data-level="3"
+                                    disabled={isLastPageLevel2}
+                                ></lightning-button>
+                            </lightning-button-group>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Cargando..." size="small"></lightning-spinner>
+            </template>
+
+            <template if:true={error}>
+                <div class="slds-text-color_error slds-m-top_small">{error}</div>
+            </template>
+        </div>
+
+        <template if:true={isModalOpen}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={handleCancelUpdate}>
+                            <lightning-icon icon-name="utility:close" size="small" variant="inverse"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Confirmar Actualización de Niveles</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>Estás a punto de intentar actualizar el nivel de *{selectedTotalCount}* cuentas seleccionadas.</p>
+                        <p class="slds-m-top_small">
+                            Recuerda que debido a las reglas de negocio (Oportunidades "Closed Won" o Tipo de Cuenta "Customer - Direct"),
+                            algunas cuentas podrían fallar la actualización, pero el proceso continuará para los registros válidos.
+                            ¿Deseas continuar?
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" label="Cancel" title="Cancel" onclick={handleCancelUpdate} class="slds-m-right_x-small"></lightning-button>
+                        <lightning-button variant="brand" label="Update Levels"
+                            title="Update Levels" onclick={handleExecuteUpdate}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>
