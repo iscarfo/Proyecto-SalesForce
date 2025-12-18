@@ -1,4 +1,4 @@
-# Mini-Proyecto-SalesForce
+# Proyecto-SalesForce
 
 Este repositorio contiene la resolución del **Assignment – Asynchronous Exercise**, cuyo objetivo es evaluar conocimientos prácticos en **Salesforce**, particularmente en el desarrollo con **Lightning Web Components (LWC)**, **Apex** y **Lightning Pages**, siguiendo buenas prácticas de arquitectura, usabilidad y validaciones de negocio.
 
